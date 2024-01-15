@@ -43,7 +43,6 @@ export class CarService {
     return this.http.post<any>(this.baseUrl+'Add', data);
     
   }
-  // this is comment
   editCar(data:CarDTO, id: number){
     data.offset = this.timezoneOffset;
     for(let i=0;i<data.availableTime.length;i++){
