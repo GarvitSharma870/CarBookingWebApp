@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="d-flex justify-content-end">
+<p-button routerLink="/car-book" [rounded]="true" severity="success">Book Car</p-button>
+</div>
+</div>
+<div class="container mt-4">
+    <div class="row">
+    <div *ngFor="let item of bookedCars" class="col-md-4 my-2">
+<div class="card">
+    <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+      <span class="card-title"><b>{{item.car.carName}} ({{item.company.companyName}})</b></span>
+    </div>
+    <div>
+      <p-chip label="No- {{item.car.number}}"></p-chip>
+    </div>
+    </div>
+    <div class="my-2">
+      <div class="bg-lightpurple p-2 text-light">Booked Timing:-</div>
+      <div class="row my-2">
+        <div class="col-md-6">
+          <b class="d-block">From:</b>
+          {{convertUtcToLocalTime(item.bookingFrom)}}
+        </div>
+        <div class="col-md-6">
+          <b class="d-block">To:</b>
+          {{convertUtcToLocalTime(item.bookingTo)}}
+        </div>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-md-6">
+        <b class="d-block">Total Hours:</b>
+        {{calculateHours(item.bookingFrom, item.bookingTo) | number : "1.2-2"}}
+      </div>
+      <div class="col-md-6">
+        <b class="d-block">Total Price:</b>
+        {{item.totalPrice | currency:'INR'}}
+      </div>
+    </div>
+    </div>
+    <div class="card-footer w-100">
+            <div class="p-2 border-1 bg-lightpurple">
+                    <span class="d-block text-center"><b class="text-light">{{item.car.slots}}</b></span>
+                    <span class="d-block text-center text-light">Remaining Slots</span>
+            </div>
+        </div>
+  </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,9 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="timeZoneModalLabel">Please select timezone in which you want to get data</h5>
+  </div>
+  <div class="modal-body">
+    <p-dropdown [(ngModel)]="selectedTimeZone" [options]="timeZones" optionLabel="timeZoneName" placeholder="Select a TimeZone"></p-dropdown>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" (click)="getData()">Get Data</button>
+  </div>

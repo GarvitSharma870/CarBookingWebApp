@@ -1,0 +1,151 @@
+<div class="mt-2 container d-flex justify-content-center">
+  <form [formGroup]="bookForm" class="mt-2">
+    <div class="mb-3">
+      <label for="company" class="form-label">Select any one Company</label>
+      <p-dropdown
+        class="d-block"
+        formControlName="companyId"
+        [options]="companies"
+        optionValue="id"
+        optionLabel="companyName"
+        placeholder="Select a Company"
+      ></p-dropdown>
+      <div
+        *ngIf="
+          f['companyId'].invalid &&
+          (f['companyId'].dirty || f['companyId'].touched)
+        "
+      >
+        <div class="text-danger" *ngIf="f['companyId'].errors?.['required']">
+          *Company is required.
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="car" class="form-label">Select Car from Given Options</label>
+      <p-dropdown
+        class="d-block"
+        formControlName="carId"
+        [options]="cars"
+        optionLabel="carName"
+        placeholder="Select a Car"
+      ></p-dropdown>
+      <div
+        *ngIf="f['carId'].invalid && (f['carId'].dirty || f['carId'].touched)"
+      >
+        <div class="text-danger" *ngIf="f['carId'].errors?.['required']">
+          *Car is required.
+        </div>
+      </div>
+    </div>
+    <div *ngIf="f['carId'].value" class="mb-3">
+      <label for="name" class="form-label"><b>Price (per hour): </b></label>
+      {{ selectedCar?.price | currency : "INR" }}/hr
+    </div>
+    <div *ngIf="f['carId'].value" class="mb-3">
+      <label for="number" class="form-label">Available Timing</label>
+      <div class="d-flex justify-content-between">
+        <div class="mx-2">
+          <p-chip label="From: {{ selectedCar?.availabilityFrom }}"></p-chip>
+        </div>
+        <div class="mx-2">
+          <p-chip label="To: {{ selectedCar?.availabilityTo }}"></p-chip>
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="time" class="form-label">Choose time for Car usage</label>
+      <p-calendar
+        class="d-block"
+        formControlName="bookedDuration"
+        selectionMode="range"
+        [minDate]="minDate"
+        [maxDate]="maxDate"
+        [showTime]="true"
+        [readonlyInput]="true"
+      ></p-calendar>
+
+      <div
+        *ngIf="
+          f['bookedDuration'].invalid &&
+          (f['bookedDuration'].dirty || f['bookedDuration'].touched)
+        "
+      >
+        <div class="text-danger" *ngIf="f['bookedDuration'].errors?.['required']">
+          *Booked Duration is required.
+        </div>
+      </div>
+    </div>
+    <button type="submit" (click)="bookCar()" class="btn btn-primary">
+      Book Now
+    </button>
+  </form>
+</div>
+<div *ngIf="pricingShow" class="mt-4 field col-12 md:col-12 d-flex justify-content-center">
+  <div class="card bg-gray-100 w-50">
+    <div class="card-header">
+      <h2><b>Car Fare Slip</b></h2>
+    </div>
+    <div class="content p-3">
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Car Name </b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>{{ selectedCar?.carName }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Company </b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>{{ selectedCar?.company.companyName }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Booked Duration (From -To)</b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>{{ f['bookedDuration'].value[0] | date: 'yyyy-MM-dd HH:mm:ss' }} - {{ f['bookedDuration'].value[1] | date: 'yyyy-MM-dd HH:mm:ss' }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Calculated Hours </b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>
+            {{totalHours | number : "1.2-2"}}
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Fare </b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>
+            {{ selectedCar?.price || "0" }} * {{ totalHours || "0" | number : "1.2-2" }}
+          </p>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col-md-3 d-flex justify-content-between">
+          <b>Total Fare</b>
+          <b>:</b>
+        </div>
+        <div class="col-md-6">
+          <p>{{ totalPrice | currency:'INR'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

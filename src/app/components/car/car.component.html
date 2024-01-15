@@ -1,0 +1,35 @@
+<div class="container" *ngIf="isShow">
+<p-table [value]="cars" [tableStyle]="{'min-width': '60rem'}">
+    <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-between">
+            Cars
+            <p-button severity="success" [rounded]="true" [text]="true" icon="pi pi-plus" (click)="openAddModal()"></p-button>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Number</th>
+            <th>Price (Per hour)</th>
+            <th>Slots</th>
+            <th>Is-Active</th>
+            <th>Action</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-car>
+        <tr>
+            <td>{{car.carName}}</td>
+            <td>{{car.company.companyName}}</td>
+            <td>{{car.number}}</td>
+            <td>{{car.price | currency:'INR'}}</td>
+            <td><p-tag [value]="car.slots" [severity]="getSeverity(car.slots)"></p-tag></td>
+            <td><p-tag [value]="car.isActive ? 'Active' : 'InActive'" [severity]="getSeverity(car.isActive)"></p-tag></td>
+            <td>
+                <p-button [rounded]="true" [text]="true" icon="pi pi-file-edit" class="" (click)="openEditModal(car.id)"></p-button>
+                <p-button [rounded]="true" [text]="true" icon="pi pi-trash" severity="danger" (click)="openDeleteCarModal(car.id)"></p-button>
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>

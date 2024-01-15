@@ -1,0 +1,68 @@
+<form class="form" [formGroup]="signupForm">
+    <div class="d-flex justify-content-center align-items-center mt-5">     
+<div class="surface-card p-4 shadow-2 border-round w-full lg:w-6">
+<div class="text-center mb-5">
+    <img src="assets/images/hyper.svg" alt="Image" height="50" class="mb-3">
+    <div class="text-900 text-3xl font-medium mb-3">Join Us</div>
+    <span class="text-600 font-medium line-height-3">Already Registered?</span>
+    <a routerLink="/login" class="font-medium no-underline ms-2 text-blue-500 cursor-pointer">Proceed to Login!</a>
+</div>
+<div>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" pInputText formControlName="name" id="name">
+        <div
+          *ngIf="f['name'].invalid && (f['name'].dirty || f['name'].touched)"
+        >
+          <div class="text-danger" *ngIf="f['name'].errors?.['required']">*Name is required.</div>
+          <div class="text-danger" *ngIf="f['name'].errors?.['minlength']">
+            *Name must be at least 3 characters long.
+          </div>
+          <div class="text-danger" *ngIf="f['name'].errors?.['maxlength']">
+            *Name must not be more than 15 characters long.
+          </div>     
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" pInputText formControlName="email">
+        <div
+            *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)"
+          >
+            <div class="text-danger" *ngIf="f['email'].errors?.['required']">*Email is required.</div>
+            <div class="text-danger" *ngIf="f['email'].errors?.['pattern']">
+              *Email is invalid.
+            </div>     
+          </div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" pInputText formControlName="password">
+        <div
+        *ngIf="f['password'].invalid && (f['password'].dirty || f['password'].touched)"
+      >
+        <div class="text-danger" *ngIf="f['password'].errors?.['required']">*Password is required.</div>
+        <div class="text-danger" *ngIf="f['password'].errors?.['pattern']">
+          *Password must contain one uppercase, one lowercase and one special characters and must be of 8 digits.
+        </div>     
+      </div>
+      </div>
+      <div class="mb-3">
+          <label for="cpassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="cpassword" pInputText formControlName="confirmPassword">
+          <div
+          *ngIf="f['confirmPassword'].invalid && (f['confirmPassword'].dirty || f['confirmPassword'].touched)"
+        >
+          <div class="text-danger" *ngIf="f['confirmPassword'].errors?.['required']">*Confirm Password is required.</div>
+          <div class="text-danger" *ngIf="f['confirmPassword'].errors?.['confirmedValidator']">
+            *Password and Confirm Password must be match.
+          </div>     
+        </div>
+        </div>
+
+
+    <button (click)="onSignUp()" pButton pRipple label="Sign Up" icon="pi pi-user" class="w-full"></button>
+</div>
+</div>
+</div>
+  </form>

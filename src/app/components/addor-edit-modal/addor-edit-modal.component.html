@@ -1,0 +1,129 @@
+<!-- Modal -->
+<div class="modal-header">
+  <h5 class="modal-title" id="staticBackdropLabel">
+    {{ formTitle }}
+  </h5>
+  <button type="button" class="btn-close" (click)="onClose()"></button>
+</div>
+<div class="modal-body">
+
+  <div class="mt-2 container">
+    <form [formGroup]="carForm" class="mt-2">
+      <div class="row">
+        <div class="mb-3 col-md-4">
+            <label for="company" class="form-label">Select any one Company</label>
+            <p-dropdown class="d-block" formControlName="companyId" [options]="companies" optionValue="id" optionLabel="companyName" placeholder="Select a Company"></p-dropdown>
+            <div
+              *ngIf="
+                f['companyId'].invalid && (f['companyId'].dirty || f['companyId'].touched)
+              "
+            >
+              <div class="text-danger" *ngIf="f['companyId'].errors?.['required']">
+                *Company is required.
+              </div>
+            </div>
+          </div>
+      <div class="mb-3 col-md-4">
+        <label for="name" class="form-label">Car Name</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="carName"
+          id="name"
+          name="name"
+        />
+        <div
+          *ngIf="
+            f['carName'].invalid && (f['carName'].dirty || f['carName'].touched)
+          "
+        >
+          <div class="text-danger" *ngIf="f['carName'].errors?.['required']">
+            Name is required.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="number" class="form-label">Car Number</label>
+        <input
+          type="text"
+          pInputText
+          formControlName="number"
+          id="number"
+          name="number"
+        />
+        <div
+          *ngIf="
+            f['number'].invalid && (f['number'].dirty || f['number'].touched)
+          "
+        >
+          <div class="text-danger" *ngIf="f['number'].errors?.['required']">
+            Car Number is required.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="price" class="form-label">Price</label>
+        <p-inputNumber class="d-block" formControlName="price" mode="currency" inputId="currency-india" id="price" currency="INR" suffix=" /hour" currencyDisplay="code" locale="en-IN"> </p-inputNumber>
+        <div
+          *ngIf="f['price'].invalid && (f['price'].dirty || f['price'].touched)"
+        >
+          <div class="text-danger" *ngIf="f['price'].errors?.['required']">
+            *Price is required.
+          </div>
+        </div>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="slots" class="form-label">Number of Slots</label>
+        <p-inputNumber
+          inputId="integeronly"
+          id="slots"
+          formControlName="slots"
+        ></p-inputNumber>
+        <div
+          *ngIf="f['slots'].invalid && (f['slots'].dirty || f['slots'].touched)"
+        >
+          <div class="text-danger" *ngIf="f['slots'].errors?.['required']">
+            *Slots is required.
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="mb-3">
+        <label for="time" class="form-label">Availability Time</label>
+        <p-calendar
+        class="d-block"
+          formControlName="availableTime"
+          selectionMode="range"
+          [showTime]="true"
+          [readonlyInput]="true"
+        ></p-calendar>
+
+        <div
+          *ngIf="
+            f['availableTime'].invalid &&
+            (f['availableTime'].dirty || f['availableTime'].touched)
+          "
+        >
+          <div
+            class="text-danger"
+            *ngIf="f['availableTime'].errors?.['required']"
+          >
+            *Availability Time is required.
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="onClose()">
+    Close
+  </button>
+  <button
+    type="submit"
+    (click)="addMode ? addCar() : editCar()"
+    class="btn btn-primary"
+  >
+    {{ addMode ? "Submit" : "Save" }}
+  </button>
+</div>
